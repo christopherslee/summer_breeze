@@ -14,4 +14,5 @@ group :development do
   gem "bundler"
   gem "jeweler"
   gem "rcov", ">= 0"
+  gem "ruby-debug"
 end

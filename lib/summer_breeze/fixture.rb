@@ -1,3 +1,5 @@
+require 'ruby-debug'
+
 module SummerBreeze
   class Fixture
     extend SummerBreeze::BeforeAndAfter
@@ -21,13 +23,13 @@ module SummerBreeze
     end 
     
     def parse_name
-      return if action.present?
+      return if @action.present?
       result = name.match(/(.*)((\.|#).*)/)
       if result
-        self.action = result[1] 
-        self.limit_to_selector = result[2]
+        @action = result[1] 
+        @limit_to_selector = result[2]
       else
-        self.action = name
+        @action = name
       end
     end
     
@@ -35,8 +37,8 @@ module SummerBreeze
       self.initializers << symbol_or_proc
     end
     
-    [:controller_class, :action, :method, :limit_to_selector, :params, :session, :flash, :filename].each do |sym|
-      define_method(sym) do |new_value = :no_op, &block|
+    [:controller_class, :method, :params, :session, :flash].each do |sym|
+      define_method(sym) do |new_value, &block|
         unless new_value == :no_op
           send(:"#{sym}=", new_value)
           return 
@@ -53,7 +55,39 @@ module SummerBreeze
         end
       end
     end
-    
+
+    def action(new_value = :no_op, &block)
+      unless new_value == :no_op
+        @action = new_value
+        return
+      end
+      if new_value == :no_op && block.present?
+        @action = block
+        return
+      end
+      if @action.is_a?(Proc)
+        return @action.call
+      else
+        return @action
+      end
+    end
+
+    def filename(new_value = :no_op, &block)
+      unless new_value == :no_op
+        @filename = new_value
+        return
+      end
+      if new_value == :no_op && block.present?
+        @filename = block
+        return
+      end
+      if @filename.is_a?(Proc)
+        return @filename.call
+      else
+        return @filename
+      end
+    end
+
     def run_initializers
       initializers.each do |initializer|
         proc = initializer
@@ -66,7 +100,7 @@ module SummerBreeze
     end
     
     def call_controller
-      controller.process(action, params, session, flash, method)
+      controller.process(@action, params, session, flash, method)
     end
     
     def run

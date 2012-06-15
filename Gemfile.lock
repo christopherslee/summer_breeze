@@ -30,6 +30,7 @@ GEM
     activesupport (3.0.5)
     arel (2.0.9)
     builder (2.1.2)
+    columnize (0.3.6)
     diff-lcs (1.1.2)
     erubis (2.6.6)
       abstract (>= 1.0.0)
@@ -54,6 +55,8 @@ GEM
       treetop (~> 1.4.8)
     mime-types (1.16)
     nokogiri (1.4.4)
+    nokogiri (1.4.4-java)
+      weakling (>= 0.0.3)
     polyglot (0.3.1)
     rack (1.2.2)
     rack-mount (0.6.14)
@@ -75,6 +78,7 @@ GEM
       thor (~> 0.14.4)
     rake (0.8.7)
     rcov (0.9.9)
+    rcov (0.9.9-java)
     rspec (2.5.0)
       rspec-core (~> 2.5.0)
       rspec-expectations (~> 2.5.0)
@@ -83,6 +87,10 @@ GEM
     rspec-expectations (2.5.0)
       diff-lcs (~> 1.1.2)
     rspec-mocks (2.5.0)
+    ruby-debug (0.10.4)
+      columnize (>= 0.1)
+      ruby-debug-base (~> 0.10.4.0)
+    ruby-debug-base (0.10.4-java)
     selenium-client (1.2.18)
     selenium-rc (2.3.2)
       selenium-client (>= 1.2.18)
@@ -90,8 +98,10 @@ GEM
     treetop (1.4.9)
       polyglot (>= 0.3.1)
     tzinfo (0.3.26)
+    weakling (0.0.4-java)
 
 PLATFORMS
+  java
   ruby
 
 DEPENDENCIES
@@ -102,3 +112,4 @@ DEPENDENCIES
   rails
   rcov
   rspec
+  ruby-debug
